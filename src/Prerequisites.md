@@ -73,7 +73,6 @@ With a Cargo project:
 
 ```
 $ cargo init
-$ echo 'fn main() { println!("Hello ARM64!"); }' > src/main.rs
 $ cargo build
 $ cargo run --quiet
 Hello, world!
