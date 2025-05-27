@@ -75,7 +75,7 @@ void main(int param_1,undefined8 param_2)
 
 ### `rust_lab::main`
 
-Before we look at the disassembly, it is a good idea to check the Rust code with the -non-internal- macros expanded:
+Before we look at the disassembly and the decompiled code, it is a good idea to check the Rust code with the -non-internal- macros expanded:
 
 ```
 $ cargo rustc --release --quiet -- -Z unpretty=expanded
