@@ -12,6 +12,40 @@ $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 $ rustup target install aarch64-unknown-linux-musl
 ```
 
+## Rust nightly toolchain
+
+This is necessary because we will be using some nightly features.
+
+```
+$ rustup install nightly
+$ rustup default nightly
+```
+
+Alternatively, just override the default toolchain in your working directory:
+
+```
+$ rustup override set nightly
+```
+
+## Rust default config
+
+```
+$ export CARGO_BUILD_TARGET=aarch64-unknown-linux-musl
+$ export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_LINKER=aarch64-linux-gnu-gcc
+$ export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_RUNNER="qemu-aarch64"
+```
+
+Alternatively, add the following to `.cargo/config.toml`:
+
+```
+[build]
+target = "aarch64-unknown-linux-musl"
+
+[target.aarch64-unknown-linux-musl]
+linker = "aarch64-linux-gnu-gcc"
+runner = "qemu-aarch64"
+```
+
 ## AArch64 cross-compiler + binutils + sysroot
 
 
@@ -32,7 +66,20 @@ $ sudo dnf install qemu-user
 ```
 $ wget https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.3.2_build/ghidra_11.3.2_PUBLIC_20250415.zip
 ```
+
 # Test the cross-compilation setup
+
+With a Cargo project:
+
+```
+$ cargo init
+$ echo 'fn main() { println!("Hello ARM64!"); }' > src/main.rs
+$ cargo build
+$ cargo run --quiet
+Hello, world!
+```
+
+Without a Cargo project:
 
 ```
 $ echo 'fn main() { println!("Hello ARM64!"); }' > test.rs
