@@ -73,6 +73,8 @@ void main(int param_1,undefined8 param_2)
 }
 ```
 
+`lang_start_internal` can be easily recognized, even if symbols are stripped. The first parameter is the `rust_lab::main` function being passed.
+
 ### `rust_lab::main`
 
 Before we look at the disassembly and the decompiled code, it is a good idea to check the Rust code with the -non-internal- macros expanded:
