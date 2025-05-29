@@ -246,3 +246,68 @@ print-type-size     variant `Some`: 16 bytes
 print-type-size         field `.0`: 16 bytes
 print-type-size     variant `None`: 0 bytes
 ```
+
+## `rust-gdb`
+
+We can verify the results of our static analysis using `rust-gdb` (or `rust-lldb`) which supports Rust types.
+
+First we need to create a debug build where the function `new_const` constructing the `Arguments` struct is not optimized and inlined.
+
+```
+$ cargo build
+```
+
+Then we start a GDB server and connect to it with our `rust-gdb` client.
+
+```
+$ qemu-aarch64 -g 1234 target/aarch64-unknown-linux-musl/debug/rust-lab
+```
+
+```
+$ rust-gdb -q -ex "target remote localhost:1234" target/aarch64-unknown-linux-musl/debug/rust-lab
+Reading symbols from target/aarch64-unknown-linux-musl/debug/rust-lab...
+Remote debugging using localhost:1234
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.fedoraproject.org/>
+Enable debuginfod for this session? (y or [n]) y
+Debuginfod has been enabled.
+To make this setting permanent, add 'set debuginfod enabled on' to .gdbinit.
+0x00000000004019bc in _start ()
+(gdb) b rust_lab::main
+Breakpoint 1 at 0x401bd4: file src/main.rs, line 2.
+(gdb) c
+Continuing.
+
+Breakpoint 1, rust_lab::main () at src/main.rs:2
+2	    println!("Hello, world!");
+(gdb) disas
+Dump of assembler code for function _ZN8rust_lab4main17hb3ccde9ab543d852E:
+   0x0000000000401bc0 <+0>:	sub	sp, sp, #0x50
+   0x0000000000401bc4 <+4>:	stp	x29, x30, [sp, #64]
+   0x0000000000401bc8 <+8>:	add	x29, sp, #0x40
+   0x0000000000401bcc <+12>:	add	x8, sp, #0x10
+   0x0000000000401bd0 <+16>:	str	x8, [sp, #8]
+=> 0x0000000000401bd4 <+20>:	adrp	x0, 0x46d000
+   0x0000000000401bd8 <+24>:	add	x0, x0, #0x710
+   0x0000000000401bdc <+28>:	bl	0x401b54 <_ZN4core3fmt2rt38_$LT$impl$u20$core..fmt..Arguments$GT$9new_const17h2005e5bc47942c4fE>
+   0x0000000000401be0 <+32>:	ldr	x0, [sp, #8]
+   0x0000000000401be4 <+36>:	bl	0x41abf0 <_ZN3std2io5stdio6_print17h5a3b0843896b0124E>
+   0x0000000000401be8 <+40>:	ldp	x29, x30, [sp, #64]
+   0x0000000000401bec <+44>:	add	sp, sp, #0x50
+   0x0000000000401bf0 <+48>:	ret
+End of assembler dump.
+(gdb) si 3
+core::fmt::Arguments::new_const<1> (pieces=0x7f867d3fe830)
+    at /home/gemesa/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/rt.rs:226
+226	    pub const fn new_const<const N: usize>(pieces: &'a [&'static str; N]) -> Self {
+(gdb) fin
+Run till exit from #0  core::fmt::Arguments::new_const<1> (pieces=0x7f867d3fe830)
+    at /home/gemesa/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/rt.rs:226
+0x0000000000401be0 in rust_lab::main () at src/main.rs:2
+2	    println!("Hello, world!");
+Value returned is $1 = core::fmt::Arguments {pieces: &[&str](size=1) = {"Hello, world!\n"}, fmt: core::option::Option<&[core::fmt::rt::Placeholder]>::None, args: &[core::fmt::rt::Argument](size=0)}
+(gdb)
+```
+
+The value returned matches the expected `Arguments` struct.
