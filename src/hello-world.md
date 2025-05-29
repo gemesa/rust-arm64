@@ -33,32 +33,6 @@ _start
                     rust_lab::main
 ```
 
-Listing:
-
-```
-                             **************************************************************
-                             *                          FUNCTION                          *
-                             **************************************************************
-                             undefined main()
-             undefined         <UNASSIGNED>   <RETURN>
-             undefined8        Stack[-0x10]:8 local_10                                XREF[1]:     00401b58(W)  
-                             main                                            XREF[5]:     Entry Point(*), 
-                                                                                          _start_c:00401a14(*), 00454cbc, 
-                                                                                          00464b04(*), 0046ffa8(*)  
-        00401b48 08 00 00 90     adrp       x8,0x401000
-        00401b4c 08 41 2c 91     add        x8,x8,#0xb10
-        00401b50 e3 03 01 aa     mov        x3,x1
-        00401b54 02 7c 40 93     sxtw       x2,w0
-        00401b58 fe 23 bf a9     stp        x30,x8=>rust_lab::main,[sp, #local_10]!
-        00401b5c 61 03 00 90     adrp       x1,0x46d000
-        00401b60 21 80 20 91     add        x1=>DAT_0046d820,x1,#0x820
-        00401b64 e0 23 00 91     add        x0,sp,#0x8
-        00401b68 e4 03 1f 2a     mov        w4,wzr
-        00401b6c fc 58 00 94     bl         std::rt::lang_start_internal                     undefined lang_start_internal()
-        00401b70 fe 07 41 f8     ldr        x30,[sp], #0x10
-        00401b74 c0 03 5f d6     ret
-```
-
 Decompiled code:
 
 ```c
@@ -144,6 +118,31 @@ print-type-size     variant `None`: 0 bytes
 ...
 ```
 
+The simplified `Arguments` type can be represented like this (explained in detail later). This is not valid C syntax of course, as `&`, `[]` or `<>` cannot be used in C struct names.
+
+```
+struct &[&str] {
+    pointer64 ptr;
+    ulonglong len;
+};
+
+struct &[Argument] {
+    pointer64 ptr;
+    ulonglong len;
+};
+
+struct Option<&[Placeholder]> {
+    pointer64 ptr;
+    ulonglong len;
+};
+
+struct Arguments {
+    struct &[&str] pieces;
+    struct &[Argument] args;
+    struct Option<&[Placeholder]> fmt;
+};
+```
+
 Listing:
 
 ```
@@ -152,28 +151,34 @@ Listing:
                              **************************************************************
                              undefined __rustcall main()
              undefined         <UNASSIGNED>   <RETURN>
-             undefined8        Stack[-0x10]:8 local_10                                XREF[2]:     00401b14(W), 
-                                                                                                   00401b3c(R)  
-             Arguments         Stack[-0x40]   arguments                               XREF[1,2]:   00401b24(W), 
-                                                                                                   00401b34(W), 
-                                                                                                   00401b30(W)  
-                             _ZN8rust_lab4main17h5a3b3b5819298371E           XREF[3]:     main:00401b58(*), 00454cb4, 
-                             rust_lab::main                                               00464ae8(*)  
-        00401b10 ff 03 01 d1     sub        sp,sp,#0x40
-        00401b14 fe 1b 00 f9     str        x30,[sp, #local_10]
-        00401b18 68 03 00 90     adrp       x8,0x46d000
-        00401b1c 08 41 21 91     add        x8,x8,#0x850
-        00401b20 29 00 80 52     mov        w9,#0x1
-        00401b24 e8 27 00 a9     stp        x8=>PTR_s_hello_world_0046d850,x9,[sp]=>argume   = 0044d830
-        00401b28 08 01 80 52     mov        w8,#0x8
-        00401b2c e0 03 00 91     mov        x0,sp
-        00401b30 ff ff 01 a9     stp        xzr,xzr,[sp, #arguments+0x18]
-        00401b34 e8 0b 00 f9     str        x8,[sp, #arguments.args.ptr]
-        00401b38 45 61 00 94     bl         std::io::stdio::_print                           undefined _print()
-        00401b3c fe 1b 40 f9     ldr        x30,[sp, #local_10]
-        00401b40 ff 03 01 91     add        sp,sp,#0x40
-        00401b44 c0 03 5f d6     ret
+             undefined8        Stack[-0x10]:8 local_10                                XREF[2]:     00401af4(W), 
+                                                                                                   00401b1c(R)  
+             Arguments         Stack[-0x40]   arguments                               XREF[1,2]:   00401b04(W), 
+                                                                                                   00401b14(W), 
+                                                                                                   00401b10(W)  
+                             _ZN8rust_lab4main17hf9a0ba7e2c977e69E           XREF[3]:     main:00401b38(*), 00453c6c, 
+                             rust_lab::main                                               004648a8(*)  
+        00401af0 ff 03 01 d1     sub        sp,sp,#0x40
+        00401af4 fe 1b 00 f9     str        x30,[sp, #local_10]
+        00401af8 68 03 00 90     adrp       x8,DAT_0046d000                                  = 9Eh
+        00401afc 08 61 1c 91     add        x8,x8,#0x718
+        00401b00 29 00 80 52     mov        w9,#0x1
+                             store pieces.ptr and pieces.len
+        00401b04 e8 27 00 a9     stp        x8=>PTR_s_Hello,_world!_0046d718,x9,[sp]=>argu   = 0044c1a0
+        00401b08 08 01 80 52     mov        w8,#0x8
+                             move the struct address to the first argument
+        00401b0c e0 03 00 91     mov        x0,sp
+                             zero out args.len and fmt.ptr
+        00401b10 ff ff 01 a9     stp        xzr,xzr,[sp, #arguments+0x18]
+                             store args.ptr
+        00401b14 e8 0b 00 f9     str        x8,[sp, #arguments.args.ptr]
+        00401b18 da 63 00 94     bl         std::io::stdio::_print                           undefined _print()
+        00401b1c fe 1b 40 f9     ldr        x30,[sp, #local_10]
+        00401b20 ff 03 01 91     add        sp,sp,#0x40
+        00401b24 c0 03 5f d6     ret
 ```
+
+The logic is simple: it constructs an `Arguments` struct on the stack and passes the address of it via `sp` to the `_print` function.
 
 Decompiled code (after creating the `Arguments` type in the Structure Editor and applying it in the code):
 
@@ -186,10 +191,14 @@ void __rustcall rust_lab::main(void)
 {
   Arguments arguments;
   
-  arguments.pieces.ptr = (undefined *)&PTR_s_hello_world_0046d850;
+                    /* store pieces.ptr and pieces.len */
+  arguments.pieces.ptr = (undefined *)&PTR_s_Hello,_world!_0046d718;
   arguments.pieces.len = 1;
+                    /* move the struct address to the first argument */
+                    /* zero out args.len and fmt.ptr */
   arguments.args.len = 0;
   arguments.fmt.ptr = (undefined *)0x0;
+                    /* store args.ptr */
   arguments.args.ptr = &DAT_00000008;
   std::io::stdio::_print(&arguments);
   return;
