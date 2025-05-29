@@ -160,7 +160,7 @@ Listing:
                              rust_lab::main                                               004648a8(*)  
         00401af0 ff 03 01 d1     sub        sp,sp,#0x40
         00401af4 fe 1b 00 f9     str        x30,[sp, #local_10]
-        00401af8 68 03 00 90     adrp       x8,DAT_0046d000                                  = 9Eh
+        00401af8 68 03 00 90     adrp       x8,0x46d000
         00401afc 08 61 1c 91     add        x8,x8,#0x718
         00401b00 29 00 80 52     mov        w9,#0x1
                              store pieces.ptr and pieces.len
@@ -199,7 +199,7 @@ void __rustcall rust_lab::main(void)
   arguments.args.len = 0;
   arguments.fmt.ptr = (undefined *)0x0;
                     /* store args.ptr */
-  arguments.args.ptr = &DAT_00000008;
+  arguments.args.ptr = (undefined *)0x8;
   std::io::stdio::_print(&arguments);
   return;
 }
