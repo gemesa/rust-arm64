@@ -55,6 +55,16 @@ $ sudo dnf install binutils-aarch64-linux-gnu
 $ sudo dnf install sysroot-aarch64-fc41-glibc
 ```
 
+## `rustfilt` (optional)
+
+If you need to manually demangle a symbol, `rustfilt` is very convenient:
+
+```
+$ cargo install rustfilt
+$ echo _ZN8rust_lab4main17hf9a0ba7e2c977e69E | rustfilt
+rust_lab::main
+```
+
 ## QEMU
 
 ```
