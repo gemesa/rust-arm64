@@ -210,7 +210,22 @@ From the [Rust reference](https://doc.rust-lang.org/reference/type-layout.html#p
 
 In practice, this means that the fields of the struct `Arguments` are 16 bytes in memory: an 8 byte pointer and an 8 byte length. This is confirmed by the output of `-Z print-type-sizes` above.
 
-`pieces` is a reference to a slice of `str` references. In this case, `pieces` only references 1 `str`.
+`pieces` is a reference to a slice of `str` references (`&str`). In this case, `pieces` references only 1 `&str` which is also an 8 byte pointer and an 8 byte length.
+
+```
+                             PTR_s_Hello,_world!_0046d718                    XREF[1]:     main:00401b04(*)  
+        0046d718 a0 c1 44        addr       s_Hello,_world!_0044c1a0                         = "Hello, world!\n"
+                 00 00 00 
+                 00 00
+        0046d720 0e              ??         0Eh
+        0046d721 00              ??         00h
+        0046d722 00              ??         00h
+        0046d723 00              ??         00h
+        0046d724 00              ??         00h
+        0046d725 00              ??         00h
+        0046d726 00              ??         00h
+        0046d727 00              ??         00h
+```
 
 `args` is a reference to a slice of `Argument` items and it references an empty slice now. Empty slices do not point to null but their size is 0. They point to valid addresses instead, depending on the alignment (8 bytes here).
 
