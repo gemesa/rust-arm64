@@ -254,7 +254,7 @@ We can verify the results of our static analysis using `rust-gdb` (or `rust-lldb
 First we need to create a debug build where the function `new_const` constructing the `Arguments` struct is not optimized and inlined.
 
 ```
-$ cargo build
+$ cargo rustc
 ```
 
 Then we start a GDB server and connect to it with our `rust-gdb` client.
