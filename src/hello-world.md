@@ -8,6 +8,31 @@ fn main() {
 }
 ```
 
+[`println!`](https://github.com/rust-lang/rust/blob/ec28ae9454139023117270985f114823d6570657/library/std/src/macros.rs#L138) is a macro that wraps the `_print` function.
+
+```
+$ cargo rustc --release --quiet -- -Z unpretty=expanded
+#![feature(prelude_import)]
+#[prelude_import]
+use std::prelude::rust_2024::*;
+#[macro_use]
+extern crate std;
+fn main() { { ::std::io::_print(format_args!("Hello, world!\n")); }; }
+```
+
+Alternatively, you can see all macro expansions (including built-in ones) in the HIR:
+
+```
+$ cargo rustc --release --quiet -- -Z unpretty=hir
+#[prelude_import]
+use std::prelude::rust_2024::*;
+#[macro_use]
+extern crate std;
+fn main() {
+    { ::std::io::_print(format_arguments::new_const(&["Hello, world!\n"])); };
+}
+```
+
 ## Build
 
 ```
@@ -51,32 +76,7 @@ void main(int param_1,undefined8 param_2)
 
 ### `rust_lab::main`
 
-Before we look at the disassembly and the decompiled code, it is a good idea to check the Rust code with the -non-internal- macros expanded:
-
-```
-$ cargo rustc --release --quiet -- -Z unpretty=expanded
-#![feature(prelude_import)]
-#[prelude_import]
-use std::prelude::rust_2024::*;
-#[macro_use]
-extern crate std;
-fn main() { { ::std::io::_print(format_args!("Hello, world!\n")); }; }
-```
-
-Alternatively, all macros (including the internal ones) are expanded in the HIR:
-
-```
-$ cargo rustc --release --quiet -- -Z unpretty=hir
-#[prelude_import]
-use std::prelude::rust_2024::*;
-#[macro_use]
-extern crate std;
-fn main() {
-    { ::std::io::_print(format_arguments::new_const(&["Hello, world!\n"])); };
-}
-```
-
-As we can see, `println!` is expanded to a [`_print`](https://stdrs.dev/nightly/x86_64-unknown-linux-gnu/std/io/stdio/fn._print.html#) call, which accepts an [`Arguments`](https://stdrs.dev/nightly/x86_64-unknown-linux-gnu/std/fmt/struct.Arguments.html) struct.
+As we saw above, `println!` is expanded to a [`_print`](https://stdrs.dev/nightly/x86_64-unknown-linux-gnu/std/io/stdio/fn._print.html#) call, which accepts an [`Arguments`](https://stdrs.dev/nightly/x86_64-unknown-linux-gnu/std/fmt/struct.Arguments.html) struct.
 
 While reconstructing the `Arguments` type, the type size information is very useful. Note that the compiler might reorder the struct fields.
 
