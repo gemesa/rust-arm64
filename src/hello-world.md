@@ -272,7 +272,7 @@ First we need to create a debug build where the function `new_const` constructin
 $ cargo rustc
 ```
 
-Then we start a GDB server and connect to it with our `rust-gdb` client.
+Then we start a GDB server and connect to it with the `rust-gdb` client. We will examine the `Arguments` struct returned by `new_const`.
 
 ```
 $ qemu-aarch64 -g 1234 target/aarch64-unknown-linux-musl/debug/rust-lab
