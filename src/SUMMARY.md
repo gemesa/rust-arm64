@@ -7,3 +7,7 @@
 [References](References.md)
 
 - [Hello, world!](./hello-world.md)
+
+# Data types
+
+- [`Vec`](./vec.md)
