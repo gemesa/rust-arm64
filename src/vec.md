@@ -91,7 +91,7 @@ Relevant types:
 
 With this background information, we are ready to look at the decompiled code. Note that this is not the raw decompiled code. First we needed to create the `Vec<u8>` type in the Structure Editor and apply it in the code, then implement some further modifications, e.g., fix the prototype of `__rust_alloc`.
 
-```
+```c
 /* WARNING: Unknown calling convention: __rustcall */
 /* rust_lab::main */
 
@@ -164,7 +164,7 @@ const fn min_non_zero_cap(size: usize) -> usize {
 
 Raw decompiled code for reference:
 
-```
+```c
 /* WARNING: Unknown calling convention: __rustcall */
 /* rust_lab::main */
 
