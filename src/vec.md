@@ -162,6 +162,15 @@ const fn min_non_zero_cap(size: usize) -> usize {
 }
 ```
 
+Call graph of `grow_one`:
+
+```
+grow_one
+    finish_grow
+        __rust_realloc
+        __rust_alloc
+```
+
 Raw decompiled code for reference:
 
 ```c
