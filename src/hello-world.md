@@ -122,18 +122,18 @@ The simplified `Arguments` type can be represented like this (explained in detai
 
 ```
 struct &[&str] {
-    pointer64 ptr;
-    ulonglong len;
+    ptr64 ptr;
+    usize len;
 };
 
 struct &[Argument] {
-    pointer64 ptr;
-    ulonglong len;
+    ptr64 ptr;
+    usize len;
 };
 
 struct Option<&[Placeholder]> {
-    pointer64 ptr;
-    ulonglong len;
+    ptr64 ptr;
+    usize len;
 };
 
 struct Arguments {
@@ -192,14 +192,14 @@ void __rustcall rust_lab::main(void)
   Arguments arguments;
   
                     /* store pieces.ptr and pieces.len */
-  arguments.pieces.ptr = (undefined *)&PTR_s_Hello,_world!_0046d718;
+  arguments.pieces.ptr = (ptr64)&PTR_s_Hello,_world!_0046d718;
   arguments.pieces.len = 1;
                     /* move the struct address to the first argument */
                     /* zero out args.len and fmt.ptr */
   arguments.args.len = 0;
-  arguments.fmt.ptr = (undefined *)0x0;
+  arguments.fmt.ptr = (ptr64)0x0;
                     /* store args.ptr */
-  arguments.args.ptr = (undefined *)0x8;
+  arguments.args.ptr = (ptr64)0x8;
   std::io::stdio::_print(&arguments);
   return;
 }
