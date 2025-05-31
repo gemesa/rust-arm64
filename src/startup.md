@@ -172,11 +172,12 @@ std::rt::lang_start_internal
   (**(code **)(param_2 + 0x28))(param_1);
 ...
 ```
-```
-0x0046d6e8 + 0x28 = 0x46d710
-```
 
 Using this offset and the vtable address, we can calculate the address of the vtable entry which contains the address of `std::rt::lang_start::_{{closure}}`:
+
+```
+0x0046d6e8 + 0x28 = 0x0046d710
+```
 
 ```c
 /* WARNING: Unknown calling convention: __rustcall */
