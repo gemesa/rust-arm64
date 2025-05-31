@@ -43,37 +43,6 @@ $ cargo rustc --release
 
 Load the binary into Ghidra and auto-analyze it.
 
-### Locating `main`
-
-In an `std` environment (as opposed to [`no_std`](https://docs.rust-embedded.org/book/intro/no-std.html)), the user-defined `main` function (here `rust_lab::main`) is called by [`lang_start_internal`](https://stdrs.dev/nightly/x86_64-unknown-linux-gnu/std/rt/fn.lang_start_internal.html).
-
-Call graph:
-
-```
-_start
-    _start_c
-        __libc_start_main
-            main
-                lang_start_internal
-                    rust_lab::main
-```
-
-Decompiled code:
-
-```c
-void main(int param_1,undefined8 param_2)
-
-{
-  code *pcStack_8;
-  
-  pcStack_8 = rust_lab::main;
-  std::rt::lang_start_internal(&pcStack_8,&DAT_0046d6e8,(long)param_1,param_2,0);
-  return;
-}
-```
-
-`lang_start_internal` can be easily recognized, even if symbols are stripped. The first parameter is the `rust_lab::main` function being passed.
-
 ### `rust_lab::main`
 
 As we saw above, `println!` is expanded to a [`_print`](https://stdrs.dev/nightly/x86_64-unknown-linux-gnu/std/io/stdio/fn._print.html#) call, which accepts an [`Arguments`](https://stdrs.dev/nightly/x86_64-unknown-linux-gnu/std/fmt/struct.Arguments.html) struct.
