@@ -4,11 +4,7 @@ This section shows how to locate the user-defined `main` function and trace the 
 
 ## Source
 
-```rust
-fn main() {
-    println!("Hello, world!");
-}
-```
+The source code of chapter [`Hello, world!`](./hello-world.md) is reused here.
 
 ## Build
 
