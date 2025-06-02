@@ -11,6 +11,7 @@
 # Data types
 
 - [`Vec`](./vec.md)
+- [`Option`](./option.md)
 
 # Runtime
 
