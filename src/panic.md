@@ -4,6 +4,8 @@ When a Rust program panics, it can handle the failure in two ways: unwind or abo
 
 ## Source
 
+Initialize a new workspace with `cargo init`.
+
 The source code of chapter [`Vec`](./vec.md) is reused here.
 
 ## Build

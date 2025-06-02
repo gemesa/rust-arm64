@@ -2,6 +2,8 @@
 
 ## Source
 
+Initialize a new workspace with `cargo init`.
+
 ```rust
 fn main() -> std::process::ExitCode {
     let mut vec = vec![1, 2, 3];

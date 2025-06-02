@@ -4,6 +4,8 @@ This section shows how to locate the user-defined `main` function and trace the 
 
 ## Source
 
+Initialize a new workspace with `cargo init`.
+
 The source code of chapter [`Hello, world!`](./hello-world.md) is reused here.
 
 ## Build

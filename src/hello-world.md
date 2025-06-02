@@ -2,6 +2,8 @@
 
 ## Source
 
+Initialize a new workspace with `cargo init`.
+
 ```rust
 fn main() {
     println!("Hello, world!");
