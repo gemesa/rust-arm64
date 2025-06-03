@@ -113,7 +113,7 @@ Load the `.o` file (located at `target/aarch64-unknown-linux-musl/release/deps/`
 
 ### Layout
 
-[`Option`](https://doc.rust-lang.org/std/option/enum.Option.html) is an `Enum` type which is a tagged union. In most cases this means it has 2 fields: discriminant and data. The discriminant marks which union variant should be used to interpret the data. In case of the `None` variant, the data value is undefined. We will see this in the generated code but this is [documented](https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap_unchecked) as well.
+[`Option`]((https://doc.rust-lang.org/std/option/enum.Option.html)) is an `Enum` type which is conceptually a tagged union with a discriminant and data. However, Rust often applies [discriminant elision](https://github.com/rust-lang/unsafe-code-guidelines/blob/c138499c1de03b908dfe719a41193c84f8146883/reference/src/layout/enums.md#layout-of-a-data-carrying-enums-without-a-repr-annotation). For common types like references and `Box<T>`, `None` is represented using invalid bit patterns (like null pointers, see chapter [Null pointer optimization](#null-pointer-optimization)) rather than a separate discriminant field, making `Option<T>` the same size as `T`. In case of the `None` variant, the data value is undefined. We will see this in the generated code but this is [documented](https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap_unchecked) as well. The exact memory layout is unspecified without explicit `#[repr]` attributes.
 
 ### `safe_divide`
 
@@ -256,7 +256,7 @@ There are some cases where the discriminant is omitted due to optimizations. The
 - `Option<&str>`
 - `Option<Box<i32>>`
 
-By the safety guarantees of safe Rust, a `&str` always points to a valid location and a `Box<T>` always points to a valid heap allocation. This enables the compiler to use further optimizations, for example dropping the discriminant field and adding a null check to determine if the data is valid.
+By the safety guarantees of safe Rust, a `&str` always points to a valid location and a `Box<T>` always points to a valid heap allocation. This enables the compiler to use further optimizations, for example dropping the discriminant field and using a null value to represent the `None` variant.
 
 While tracing the different compilation steps, we can see that the discriminant is present in the MIR but not in the LLVM IR. This means the null pointer optimization happens during lowering MIR to LLVM IR.
 
