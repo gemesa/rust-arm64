@@ -176,7 +176,7 @@ fn safe_divide(_1: i32, _2: i32) -> Option<i32> {
 }
 ```
 
-The result is returned using 2 registers: `w0` stores the discriminant (`None`: 0, `Some`: 1) and `w1` stores the data.
+The result is returned using 2 registers: `w0` stores the discriminant (`None`: `0`, `Some`: `1`) and `w1` stores the data.
 
 Listing:
 
