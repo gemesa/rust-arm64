@@ -107,7 +107,7 @@ Load the `.o` file (located at `target/aarch64-unknown-linux-musl/release/deps/`
 
 ### Layout
 
-[This description](https://github.com/rust-lang/unsafe-code-guidelines/blob/c138499c1de03b908dfe719a41193c84f8146883/reference/src/layout/enums.md#layout-of-rust-enum-types) provides a good overview of the `enum` types and their layouts (even the ones we will not discuss such as empty `enum` and `enum` with a single variant). `enum`s are also called [tagged unions](https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html) but their layout is [unspecified](https://github.com/rust-lang/unsafe-code-guidelines/blob/c138499c1de03b908dfe719a41193c84f8146883/reference/src/layout/enums.md#layout-of-a-data-carrying-enums-without-a-repr-annotation), unless you use `#[repr(...)]`.
+[This description](https://github.com/rust-lang/unsafe-code-guidelines/blob/c138499c1de03b908dfe719a41193c84f8146883/reference/src/layout/enums.md#layout-of-rust-enum-types) provides a good overview of the `enum` types and their layouts (even the ones we will not discuss such as empty `enum` and `enum` with a single variant). `enum`s are also called [tagged unions](https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html) and their layout is [unspecified](https://github.com/rust-lang/unsafe-code-guidelines/blob/c138499c1de03b908dfe719a41193c84f8146883/reference/src/layout/enums.md#layout-of-a-data-carrying-enums-without-a-repr-annotation), unless you use `#[repr(...)]`.
 
 Still, we will see that in our examples an `enum` is either represented by a discriminant only or a discriminant plus the data/payload.
 
