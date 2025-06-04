@@ -89,9 +89,9 @@ pub fn make_point() -> Shape {
 ```
 
 The `enum` type is described in the [official docs](https://doc.rust-lang.org/std/keyword.enum.html) in detail. We are using `no_mangle` to simplify things, the reason can be found [here](https://shadowshell.io/rust-arm64/option.html#no_mangle). The source code is split into 3 parts:
-- unit-only `enum`
-- data-carrying `enum` (largest variant: tuple with 1 field)
-- data-carrying `enum` (largest variant: tuple with 2 fields)
+- [Unit-only `enum`](#unit-only-enum)
+- [Data-carrying `enum` (largest variant: tuple with 1 field)](#data-carrying-enum-largest-variant-tuple-with-1-field)
+- [Data-carrying `enum` (largest variant: tuple with 2 fields)](#data-carrying-enum-largest-variant-tuple-with-2-fields)
 
 Note: for this analysis the unit-only and data-carrying types have been chosen as they are the most common ones.
 
@@ -111,7 +111,7 @@ Load the `.o` file (located at `target/aarch64-unknown-linux-musl/release/deps/`
 
 Still, we will see that in our examples an `enum` is either represented by a discriminant only or a discriminant plus the data/payload.
 
-## Unit-only `enum`
+### Unit-only `enum`
 
 ```rust
 pub enum Color {
@@ -186,7 +186,7 @@ Listings:
 
 ```
 
-## Data-carrying `enum` (largest variant: tuple with 1 field)
+### Data-carrying `enum` (largest variant: tuple with 1 field)
 
 ```rust
 pub enum BasicShape {
@@ -267,7 +267,7 @@ Listings:
         0010008c c0 03 5f d6     ret
 ```
 
-## Data-carrying `enum` (largest variant: tuple with 2 fields)
+### Data-carrying `enum` (largest variant: tuple with 2 fields)
 
 ```rust
 pub enum Shape {
