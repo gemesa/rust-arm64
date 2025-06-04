@@ -41,6 +41,8 @@ pub fn process_box_option(value: Option<Box<i32>>) -> i32 {
 
 The `Option` type is described in the [official docs](https://doc.rust-lang.org/std/option/) in detail.
 
+### `no_mangle`
+
 In some cases, simple functions e.g. `process_option` might be inlined by the compiler. For this reason, these are not present in the `.o` file, only in `.rmeta`. The inlining will be done based on the information (e.g. function signatures, type information and encoded MIR) available in the `.rmeta` file. Information about the `.rmeta` file format can be found [here](https://rustc-dev-guide.rust-lang.org/backend/libs-and-metadata.html#rmeta). We want to see the generated code for our sample functions in the `.o` file, so this optimization is undesirable for us. A possible solution is to use `#[unsafe(no_mangle)]` which has 2 effects:
 - Do not mangle the symbol name.
 - Export this symbol. `#[unsafe(no_mangle)]` implies that the function is intended to be called from outside of the current compilation unit (e.g. from C code or another Rust crate with a different LTO context). For this reason, it will be present in the `.o` file.
@@ -113,7 +115,7 @@ Load the `.o` file (located at `target/aarch64-unknown-linux-musl/release/deps/`
 
 ### Layout
 
-[`Option`](https://doc.rust-lang.org/std/option/enum.Option.html) is an `enum` type which is conceptually a tagged union with a discriminant and data. However, Rust often applies [discriminant elision](https://github.com/rust-lang/unsafe-code-guidelines/blob/c138499c1de03b908dfe719a41193c84f8146883/reference/src/layout/enums.md#layout-of-a-data-carrying-enums-without-a-repr-annotation). For common types like references and `Box<T>`, `None` is represented using invalid bit patterns (like null pointers, see chapter [Null pointer optimization](#null-pointer-optimization)) rather than a separate discriminant field, making `Option<T>` the same size as `T`. In case of the `None` variant, the data value is undefined. We will see this in the generated code but this is [documented](https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap_unchecked) as well. The exact memory layout is unspecified without explicit `#[repr]` attributes.
+[`Option`](https://doc.rust-lang.org/std/option/enum.Option.html) is an `enum` type which is conceptually a [tagged union](https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html) with a discriminant and data (refer to chapter [`enum`](./enum.md) for more information about `enum`s). Since the layout is unspecified, Rust often applies [discriminant elision](https://github.com/rust-lang/unsafe-code-guidelines/blob/c138499c1de03b908dfe719a41193c84f8146883/reference/src/layout/enums.md#layout-of-a-data-carrying-enums-without-a-repr-annotation). For common types like references and `Box<T>`, `None` is represented using invalid bit patterns (like null pointers, see chapter [Null pointer optimization](#null-pointer-optimization)) rather than a separate discriminant field, making `Option<T>` the same size as `T`. In case of the `None` variant, the data value is undefined. We will see this in the generated code but this is [documented](https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap_unchecked) as well. The exact memory layout is unspecified without explicit `#[repr]` attributes.
 
 ### `safe_divide`
 
