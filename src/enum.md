@@ -88,7 +88,7 @@ pub fn make_point() -> Shape {
 }
 ```
 
-The `enum` type is described in the [official docs](https://doc.rust-lang.org/std/keyword.enum.html) in detail. We are using `no_mangle` to simplify things, the reason can be found [here](./option.md/#no_mangle). The source code is split into 3 parts:
+The `enum` type is described in the [official docs](https://doc.rust-lang.org/std/keyword.enum.html) in detail. We are using `no_mangle` to simplify things, the reason can be found [here](https://shadowshell.io/rust-arm64/option.html#no_mangle). The source code is split into 3 parts:
 - unit-only `enum`
 - data-carrying `enum` (largest variant: tuple with 1 field)
 - data-carrying `enum` (largest variant: tuple with 2 fields)
