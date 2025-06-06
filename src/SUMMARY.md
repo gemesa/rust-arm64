@@ -13,6 +13,7 @@
 - [`Vec`](./vec.md)
 - [`enum`](./enum.md)
 - [`Option`](./option.md)
+- [`Result`](./result.md)
 
 # Runtime
 
