@@ -55,6 +55,14 @@ $ sudo dnf install binutils-aarch64-linux-gnu
 $ sudo dnf install sysroot-aarch64-fc41-glibc
 ```
 
+## LLVM
+
+Necessary for binutils, e.g. `llvm-objdump`.
+
+```
+$ sudo dnf install llvm
+```
+
 ## `rustfilt` (optional)
 
 If you need to manually demangle a symbol, `rustfilt` is very convenient:
