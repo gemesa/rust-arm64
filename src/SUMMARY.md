@@ -10,6 +10,7 @@
 
 # Data types
 
+- [`Box`](./box.md)
 - [`Vec`](./vec.md)
 - [`enum`](./enum.md)
 - [`Option`](./option.md)
