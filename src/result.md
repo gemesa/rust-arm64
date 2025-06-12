@@ -264,7 +264,7 @@ pub fn process_result_box_enum(value: Result<Box<i32>, MathError>) -> i32 {
     }
 }
 ```
-`Box<T>` is a thin pointer pointing to a heap location, the memory is automatically deallocated by [`__rust_dealloc`](https://stdrs.dev/nightly/x86_64-unknown-linux-gnu/alloc/alloc/fn.__rust_dealloc.html). The layout is similar to what we saw in the case of [`divide_with_enum_error`](#divide_with_enum_error). The difference is that the size of the `Ok` data is 8 bytes instead of 4.
+`Box<T>` is a thin pointer pointing to a heap location, the memory is automatically deallocated by [`__rust_dealloc`](https://stdrs.dev/nightly/x86_64-unknown-linux-gnu/alloc/alloc/fn.__rust_dealloc.html). For more information refer to chapter [`Box`](./box.md). The layout is similar to what we saw in the case of [`divide_with_enum_error`](#divide_with_enum_error). The difference is that the size of the `Ok` data is 8 bytes instead of 4.
 
 ```
 $ cargo rustc --release --quiet -- -Z print-type-sizes
