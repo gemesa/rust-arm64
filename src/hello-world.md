@@ -22,7 +22,7 @@ extern crate std;
 fn main() { { ::std::io::_print(format_args!("Hello, world!\n")); }; }
 ```
 
-Alternatively, you can see all macro expansions (including built-in ones) in the HIR:
+Alternatively, you can see all macro expansions (including intrinsics) in the HIR:
 
 ```
 $ cargo rustc --release --quiet -- -Z unpretty=hir
