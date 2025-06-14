@@ -19,6 +19,7 @@
 # Macros
 
 - [Declarative macros](./macro-declarative.md)
+- [Built-in macros](./macro-built-in.md)
 
 # Runtime
 

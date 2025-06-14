@@ -22,7 +22,7 @@ extern crate std;
 fn main() { { ::std::io::_print(format_args!("Hello, world!\n")); }; }
 ```
 
-Alternatively, you can see all macro expansions (including intrinsics) in the HIR:
+Alternatively, you can see all macro expansions (including built-in ones) in the HIR:
 
 ```
 $ cargo rustc --release --quiet -- -Z unpretty=hir
@@ -34,6 +34,8 @@ fn main() {
     { ::std::io::_print(format_arguments::new_const(&["Hello, world!\n"])); };
 }
 ```
+
+More information about declarative macros can be found in chapter [Declarative macros](./macro-declarative.md) and chapter [Built-in macros](./macro-built-in.md).
 
 ## Build
 
