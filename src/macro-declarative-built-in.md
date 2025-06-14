@@ -1,4 +1,4 @@
-# Built-in macros
+# Built-in declarative macros
 
 ## Source
 
@@ -11,7 +11,7 @@ pub fn format_args_built_in() {
 }
 ```
 
-Built-in macros are a special type of [declarative macros](./macro-declarative.md). They are marked with [`#[rustc_builtin_macro]`](https://github.com/rust-lang/rust/blob/ec28ae9454139023117270985f114823d6570657/compiler/rustc_resolve/src/macros.rs#L1132) and expanded with an internal [expander function](https://github.com/rust-lang/rust/blob/ec28ae9454139023117270985f114823d6570657/compiler/rustc_resolve/src/macros.rs#L1134). The list of the built-in macros can be found [here](https://github.com/rust-lang/rust/blob/ec28ae9454139023117270985f114823d6570657/compiler/rustc_builtin_macros/src/lib.rs#L78).
+Built-in declarative macros are a special type of [declarative macros](./macro-declarative.md). They are marked with [`#[rustc_builtin_macro]`](https://github.com/rust-lang/rust/blob/ec28ae9454139023117270985f114823d6570657/compiler/rustc_resolve/src/macros.rs#L1132) and expanded with an internal [expander function](https://github.com/rust-lang/rust/blob/ec28ae9454139023117270985f114823d6570657/compiler/rustc_resolve/src/macros.rs#L1134). The list of the built-in macros can be found [here](https://github.com/rust-lang/rust/blob/ec28ae9454139023117270985f114823d6570657/compiler/rustc_builtin_macros/src/lib.rs#L78).
 
 If we look at the [`format_args!`](https://github.com/rust-lang/rust/blob/64c81fd10509924ca4da5d93d6052a65b75418a5/library/core/src/macros/mod.rs#L1004) macro as an example, we see that it is marked with `#[rustc_builtin_macro]` and the [expander function](https://github.com/rust-lang/rust/blob/ec28ae9454139023117270985f114823d6570657/compiler/rustc_builtin_macros/src/lib.rs#L92) is [`expand_format_args`](https://github.com/rust-lang/rust/blob/ec28ae9454139023117270985f114823d6570657/compiler/rustc_builtin_macros/src/format.rs#L1032) which calls [`expand_format_args_impl`](https://github.com/rust-lang/rust/blob/ec28ae9454139023117270985f114823d6570657/compiler/rustc_builtin_macros/src/format.rs#L1006).
 

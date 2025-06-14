@@ -35,7 +35,7 @@ fn main() {
 }
 ```
 
-More information about declarative macros can be found in chapter [Declarative macros](./macro-declarative.md) and chapter [Built-in macros](./macro-built-in.md).
+More information about declarative macros can be found in chapter [Declarative macros](./macro-declarative.md) and chapter [Built-in declarative macros](./macro-declarative-built-in.md).
 
 ## Build
 
