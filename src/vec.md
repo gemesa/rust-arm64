@@ -21,6 +21,8 @@ fn main() -> std::process::ExitCode {
     );
 ```
 
+More information can be found about declarative macros in chapter [Declarative macros](./macro-declarative.md).
+
 ```
 $ cargo rustc --release --quiet -- -Z unpretty=hir
 #[prelude_import]

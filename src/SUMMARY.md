@@ -16,6 +16,10 @@
 - [`Option`](./option.md)
 - [`Result`](./result.md)
 
+# Macros
+
+- [Declarative macros](./macro-declarative.md)
+
 # Runtime
 
 - [Startup](./startup.md)
