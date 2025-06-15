@@ -22,6 +22,10 @@
 - [Built-in declarative macros](./macro-declarative-built-in.md)
 - [Procedural macros](./macro-procedural.md)
 
+# Attributes
+
+- [Built-in attributes](./attributes-built-in.md)
+
 # Runtime
 
 - [Startup](./startup.md)
