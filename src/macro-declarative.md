@@ -5,19 +5,16 @@
 Initialize a new workspace with `cargo init --lib`.
 
 ```rust
-#[unsafe(no_mangle)]
 pub fn declarative_macro_vec_empty() -> Vec<i32> {
     let vec: Vec<i32> = vec![];
     vec
 }
 
-#[unsafe(no_mangle)]
 pub fn declarative_macro_vec_repeat() -> Vec<i32> {
     let vec: Vec<i32> = vec![1; 10];
     vec
 }
 
-#[unsafe(no_mangle)]
 pub fn declarative_macro_vec_list() -> Vec<i32> {
     let vec: Vec<i32> = vec![1, 2, 3];
     vec
@@ -54,7 +51,6 @@ macro_rules! vec {
 ## `declarative_macro_vec_empty`
 
 ```rust
-#[unsafe(no_mangle)]
 pub fn declarative_macro_vec_empty() -> Vec<i32> {
     let vec: Vec<i32> = vec![];
     vec
@@ -64,7 +60,6 @@ pub fn declarative_macro_vec_empty() -> Vec<i32> {
 ```
 $ cargo expand
 ...
-#[unsafe(no_mangle)]
 pub fn declarative_macro_vec_empty() -> Vec<i32> {
     let vec: Vec<i32> = ::alloc::vec::Vec::new();
     vec
@@ -75,7 +70,6 @@ pub fn declarative_macro_vec_empty() -> Vec<i32> {
 ## `declarative_macro_vec_repeat`
 
 ```rust
-#[unsafe(no_mangle)]
 pub fn declarative_macro_vec_repeat() -> Vec<i32> {
     let vec: Vec<i32> = vec![1; 10];
     vec
@@ -85,7 +79,6 @@ pub fn declarative_macro_vec_repeat() -> Vec<i32> {
 ```
 $ cargo expand
 ...
-#[unsafe(no_mangle)]
 pub fn declarative_macro_vec_repeat() -> Vec<i32> {
     let vec: Vec<i32> = ::alloc::vec::from_elem(1, 10);
     vec
@@ -95,7 +88,6 @@ pub fn declarative_macro_vec_repeat() -> Vec<i32> {
 ## `declarative_macro_vec_list`
 
 ```rust
-#[unsafe(no_mangle)]
 pub fn declarative_macro_vec_list() -> Vec<i32> {
     let vec: Vec<i32> = vec![1, 2, 3];
     vec
@@ -105,7 +97,6 @@ pub fn declarative_macro_vec_list() -> Vec<i32> {
 ```
 $ cargo expand
 ...
-#[unsafe(no_mangle)]
 pub fn declarative_macro_vec_list() -> Vec<i32> {
     let vec: Vec<i32> = <[_]>::into_vec(::alloc::boxed::box_new([1, 2, 3]));
     vec

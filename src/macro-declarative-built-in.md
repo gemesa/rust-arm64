@@ -5,7 +5,6 @@
 Initialize a new workspace with `cargo init --lib`.
 
 ```rust
-#[unsafe(no_mangle)]
 pub fn format_args_built_in() {
     println!("Hello, world!");
 }
@@ -31,7 +30,6 @@ macro_rules! format_args {
 ## `format_args_built_in`
 
 ```rust
-#[unsafe(no_mangle)]
 pub fn format_args_built_in() {
     println!("Hello, world!");
 }
@@ -41,7 +39,6 @@ Built-in macros are not expanded to Rust code which means `cargo expand` cannot 
 ```
 $ cargo expand
 ...
-#[unsafe(no_mangle)]
 pub fn format_args_built_in() {
     {
         ::std::io::_print(format_args!("Hello, world!\n"));
@@ -53,7 +50,6 @@ Instead, they are expanded in the HIR:
 ```
 $ cargo rustc --release --quiet -- -Z unpretty=hir
 ...
-#[no_mangle]
 fn format_args_built_in() {
     { ::std::io::_print(format_arguments::new_const(&["Hello, world!\n"])); };
 }
