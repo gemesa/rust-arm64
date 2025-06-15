@@ -25,6 +25,7 @@
 # Attributes
 
 - [Built-in attributes](./attributes-built-in.md)
+- [Macro attributes](./attributes-proc-macro.md)
 
 # Runtime
 
