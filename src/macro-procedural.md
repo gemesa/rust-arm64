@@ -9,7 +9,7 @@ Initialize a new workspace with `cargo init --lib` and add `tokio` to the depend
 async fn proc_macro_main() {}
 ```
 
-[Procedural macros](https://doc.rust-lang.org/stable/proc_macro/index.html) can manipulate the syntax tree directly. They work with `TokenStream`s which are sequences of tokens representing Rust code. A proc macro receives a `TokenStream` as input and returns a `TokenStream` as output.
+[Procedural macros](https://doc.rust-lang.org/reference/procedural-macros.html) can manipulate the syntax tree directly. They work with `TokenStream`s which are sequences of tokens representing Rust code. A proc macro receives a `TokenStream` as input and returns a `TokenStream` as output.
 
 Since proc macros can be expanded to arbitrary Rust code based on the implementation of the macro, we will focus on the expanded Rust code rather than the generated binary files in this chapter.
 
