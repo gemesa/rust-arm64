@@ -13,7 +13,7 @@ async fn proc_macro_main() {}
 
 Since proc macros can be expanded to arbitrary Rust code based on the implementation of the macro, we will focus on the expanded Rust code rather than the generated binary files in this chapter.
 
-If we look at the [`#[tokio::main]`](https://docs.rs/tokio/latest/tokio/attr.main.html) macro as an example, we see that it is expanded to [this or similar code](https://docs.rs/tokio-macros/2.5.0/src/tokio_macros/lib.rs.html#226):
+If we look at the [`#[tokio::main]`](https://docs.rs/tokio/latest/tokio/attr.main.html) attribute proc macro as an example, we see that it is expanded to [this or similar code](https://docs.rs/tokio-macros/2.5.0/src/tokio_macros/lib.rs.html#226):
 
 ```rust
 fn main() {
