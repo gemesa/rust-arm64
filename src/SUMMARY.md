@@ -27,6 +27,10 @@
 - [Built-in attributes](./attributes-built-in.md)
 - [Macro attributes](./attributes-proc-macro.md)
 
+# Async
+
+- [Introduction](./async-intro.md)
+
 # Runtime
 
 - [Startup](./startup.md)
