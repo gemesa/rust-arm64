@@ -2,4 +2,4 @@
 authors = ["Andras Gemes"]
 language = "en"
 src = "src"
-title = "From Rust to assembly: ARM64 code generation patterns"
+title = "Rust to assembly: ARM64 patterns"

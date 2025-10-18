@@ -1,3 +1,3 @@
 # rust-arm64
 
-Sources for the book "From Rust to assembly: ARM64 code generation patterns".
+Sources for the book "Rust to assembly: ARM64 patterns".
