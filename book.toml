@@ -3,3 +3,6 @@ authors = ["Andras Gemes"]
 language = "en"
 src = "src"
 title = "Rust to assembly: ARM64 patterns"
+
+[output.html]
+additional-js = ["external-links.js"]
